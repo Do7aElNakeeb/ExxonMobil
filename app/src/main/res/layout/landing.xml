@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Landing" >
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_blue_900"
+        android:id="@+id/mytoolBar"
+        >
+    </android.support.v7.widget.Toolbar>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mobil_logo_layout"
+        android:columnCount="2"
+        android:foregroundGravity="center_horizontal|center_vertical"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_centerInParent="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stations"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/stations_icon"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/stations"
+                android:layout_centerHorizontal="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+            </Button>
+
+            <TextView
+                android:id="@+id/station_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="11sp"
+                android:text="Stations"
+                android:textAlignment="center"
+                android:layout_below="@+id/stations_icon"
+                android:layout_centerHorizontal="true">
+            </TextView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/products"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/products_icon"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/products"
+                android:layout_centerHorizontal="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+            </Button>
+
+            <TextView
+                android:id="@+id/products_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="11sp"
+                android:text="Products"
+                android:textAlignment="center"
+                android:layout_below="@+id/products_icon"
+                android:layout_centerHorizontal="true">
+            </TextView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/promotions"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/promotions_icon"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/payment"
+                android:layout_centerHorizontal="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+            </Button>
+
+            <TextView
+                android:id="@+id/promotions_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="11sp"
+                android:text="Promotions"
+                android:textAlignment="center"
+                android:layout_below="@+id/promotions_icon"
+                android:layout_centerHorizontal="true">
+            </TextView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/profile_icon"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/profile"
+                android:layout_centerHorizontal="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+            </Button>
+
+            <TextView
+                android:id="@+id/profile_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="11sp"
+                android:text="Profile"
+                android:textAlignment="center"
+                android:layout_below="@+id/profile_icon"
+                android:layout_centerHorizontal="true">
+            </TextView>
+        </RelativeLayout>
+    </GridLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/mytoolBar"
+    android:id="@+id/mobil_logo_layout"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="285dp"
+        android:layout_height="81dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/mobil_tm"
+        android:foregroundGravity="center_vertical" />
+</LinearLayout>
+
+
+</RelativeLayout>

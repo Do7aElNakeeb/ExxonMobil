@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_blue_900"
+        android:id="@+id/mytoolBar"
+        android:title="@string/station_info">
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mytoolBar">
+
+    <!-- in a real application you should use styles and dimens... -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<!--        android:layout_below="@+id/mytoolBar" -->
+
+
+        <ImageView
+            android:id="@+id/header_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/station_bg"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+
+        <LinearLayout
+            android:id="@+id/informations_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/header_imageview"
+            android:gravity="center"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/station_name"
+                android:textStyle="bold"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/station_address"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:textColor="#FF707070"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/station_region"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:textColor="#FF707070"/>
+
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:id="@+id/btns_bar"
+            android:layout_below="@+id/informations_container"
+            android:background="#FFF0F0F0">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Here are the tabs, Just TextViews with a selector and a clickListener... -->
+                <!-- There is also two views at each edge with a gradient drawable making the fade effect. But I find this pretty ugly. -->
+
+            </LinearLayout>
+        </HorizontalScrollView>
+<!--
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/btns_bar"
+            android:columnWidth="90dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            />
+-->
+        <!-- cheat code: negative margin -->
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/mobil_logo"
+            android:src="@drawable/mobil_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/informations_container"
+            android:layout_marginBottom="-16dp" />
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/station_route"
+            android:id="@+id/station_route"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@id/mobil_logo"
+            android:layout_marginRight="30dp"
+            android:layout_above="@+id/informations_container"
+            android:layout_marginBottom="-16dp" />
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/station_call"
+            android:id="@+id/station_call"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/mobil_logo"
+            android:layout_above="@+id/informations_container"
+            android:layout_marginBottom="-16dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fuels_bar"
+            android:layout_below="@+id/btns_bar"
+            android:background="#2962FF">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fuels"
+                android:textSize="30dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal"/>
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fuels"
+            android:layout_below="@+id/fuels_bar"
+            android:padding="20dp">
+
+        </GridLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/services_bar"
+            android:layout_below="@+id/fuels"
+            android:background="#2962FF">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Services"
+                android:textSize="30dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"/>
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/services"
+            android:layout_below="@+id/services_bar"
+            android:padding="20dp">
+
+        </GridLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
+
+
+</RelativeLayout>

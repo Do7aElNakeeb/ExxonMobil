@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.exxonmobil.mobapp"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/gson-2.2.4.jar')
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:multidex:1.0.1'
+    compile "com.android.support:cardview-v7:24.1.1"
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
+    compile 'com.google.android.gms:play-services-location:9.4.0'
+    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.google.maps.android:android-maps-utils:0.4+'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile('com.mikepenz:materialdrawer:5.3.6@aar') {
+        transitive = true
+    }
+}
+apply plugin: 'com.google.gms.google-services'
