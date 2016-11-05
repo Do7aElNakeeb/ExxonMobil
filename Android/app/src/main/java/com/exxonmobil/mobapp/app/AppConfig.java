@@ -17,7 +17,7 @@ public class AppConfig {
     public static String URL_STATIONS = "http://exxonmobil.do7aelnakeeb.cf/stations.php";
 
     // Server promotions url
-    public static String URL_SERVER = "http://exxonmobil.do7aelnakeeb.cf/ExxonServer/";
+    public static String URL_SERVER = "http://exxonmobil.do7aelnakeeb.cf/";
 
     // Server promotions url
     public static String URL_PROMOTIONS = "http://exxonmobil.do7aelnakeeb.cf/promotions.php";

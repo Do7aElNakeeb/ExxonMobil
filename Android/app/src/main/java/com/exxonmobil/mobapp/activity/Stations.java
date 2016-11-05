@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -19,6 +21,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -29,6 +34,7 @@ import com.exxonmobil.mobapp.app.AppConfig;
 import com.exxonmobil.mobapp.app.AppController;
 import com.exxonmobil.mobapp.app.MarkerDataSource;
 import com.exxonmobil.mobapp.app.MarkerObj;
+import com.exxonmobil.mobapp.helper.CachedIconGenerator;
 import com.exxonmobil.mobapp.helper.PermissionUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,9 +51,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
+import com.google.maps.android.ui.IconGenerator;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
@@ -61,6 +72,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -74,7 +86,11 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         LocationListener,
         PlaceSelectionListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        ClusterManager.OnClusterClickListener<MarkerObj>,
+        ClusterManager.OnClusterInfoWindowClickListener<MarkerObj>,
+        ClusterManager.OnClusterItemClickListener<MarkerObj>,
+        ClusterManager.OnClusterItemInfoWindowClickListener<MarkerObj>{
 
     private static final String TAG = Stations.class.getSimpleName();
 
@@ -101,6 +117,7 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
     private ProgressDialog pDialog;
 
     private ClusterManager<MarkerObj> mClusterManager;
+    private Random mRandom = new Random(1984);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,9 +214,57 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
         initListeners();
         enableMyLocation();
         mClusterManager = new ClusterManager<MarkerObj>(this, stationsMap);
+        mClusterManager.setRenderer(new MarkerRenderer());
+        mClusterManager.setOnClusterClickListener(this);
+        mClusterManager.setOnClusterInfoWindowClickListener(this);
+        mClusterManager.setOnClusterItemClickListener(this);
+        mClusterManager.setOnClusterItemInfoWindowClickListener(this);
         stationsMap.setOnCameraIdleListener(mClusterManager);
 
         DisplayStations();
+        mClusterManager.cluster();
+/*
+        mClusterManager.getMarkerCollection().setOnInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                marker.showInfoWindow();
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+        });
+        mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                marker.showInfoWindow();
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+        });
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MarkerObj>() {
+            @Override
+            public boolean onClusterItemClick(MarkerObj markerObj) {
+
+                return true;
+            }
+        });
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<MarkerObj>() {
+            @Override
+            public void onClusterItemInfoWindowClick(MarkerObj markerObj) {
+                Toast.makeText(context, "Station Information", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), StationInfo.class);
+                i.putExtra("marker", markerObj.getName());
+                startActivity(i);
+            }
+        });
+        */
     }
 
     private void enableMyLocation() {
@@ -343,12 +408,13 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
 
                             stationInfo.addStation(new MarkerObj(name, address, region, city, latitude, longitude,  mog80,  mog92,  mog95,  diesel,
                                     MobilMart,  OnTheRun,  TheWayToGo,  CarWash,  lubricants,  phone));
-
+/*
                             LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
                             MarkerOptions options = new MarkerOptions().position( latLng );
                             options.title(name);
                             options.icon( BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.mobil_tm_marker ) ) );
                             stationsMap.addMarker( options );
+                            */
 
                         }
                         //hideDialog();
@@ -392,8 +458,10 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
         List<MarkerObj> m = stationInfo.getStationsDetails(null);
         if(m.size() != 0) {
             mClusterManager.addItems(m);
+
             mNearestStation.setLatitude(30.1071329);
             mNearestStation.setLongitude(-95.4322685);
+            /*
             for (int i = 0; i < m.size(); i++) {
                 LatLng latLng = new LatLng(Double.valueOf(m.get(i).getLatitude()), Double.valueOf(m.get(i).getLongitude()));
                 stationsMap.addMarker(new MarkerOptions()
@@ -408,7 +476,7 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
                  //   mNearestStation = nearestStation;
                // }
             }
-
+*/
             //hideDialog();
         } else {
             Toast.makeText(context,"No Stations Found",Toast.LENGTH_LONG).show();
@@ -530,8 +598,8 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
         stationsMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         stationsMap.animateCamera(CameraUpdateFactory.zoomTo(16f));
 
-        if (mNearestStation != null){
-            LatLng latLng1 = new LatLng(mNearestStation.getLatitude(), mNearestStation.getLongitude());
+        if (mCurrentLocation != null){
+            LatLng latLng1 = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             //move map camera
             stationsMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
             stationsMap.animateCamera(CameraUpdateFactory.zoomTo(16f));
@@ -552,11 +620,13 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
         //move map camera
         stationsMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         stationsMap.animateCamera(CameraUpdateFactory.zoomTo(16f));
+        /*
         stationsMap.addMarker(new MarkerOptions()
                         .title(place.getName().toString())
                         .icon(BitmapDescriptorFactory.defaultMarker())
                         .position(latLng)
         );
+        */
     }
 
     @Override
@@ -578,4 +648,103 @@ public class Stations extends AppCompatActivity implements OnMapReadyCallback,
     }
 
 
+    private class MarkerRenderer extends DefaultClusterRenderer<MarkerObj> {
+
+        private final IconGenerator mIconGenerator = new CachedIconGenerator(getApplicationContext());
+        private final IconGenerator mClusterIconGenerator = new CachedIconGenerator(getApplicationContext());
+        private final ImageView mImageView;
+        private final ImageView mClusterImageView;
+        private final TextView mClusterTextView;
+        private final int mDimension;
+
+
+        public MarkerRenderer() {
+            super(getApplicationContext(), stationsMap, mClusterManager);
+
+            View multiProfile = getLayoutInflater().inflate(R.layout.multi_stations, null);
+            mClusterIconGenerator.setContentView(multiProfile);
+            mClusterImageView = (ImageView) multiProfile.findViewById(R.id.image);
+            mClusterTextView = (TextView) multiProfile.findViewById(R.id.amu_text);
+
+            mImageView = new ImageView(getApplicationContext());
+            mDimension = (int) getResources().getDimension(R.dimen.custom_profile_image);
+           // mImageView.setLayoutParams(new ViewGroup.LayoutParams(mDimension, mDimension));
+            int padding = (int) getResources().getDimension(R.dimen.custom_profile_padding);
+           // mImageView.setPadding(padding, padding, padding, padding);
+            mIconGenerator.setContentView(mImageView);
+
+        }
+
+        @Override
+        protected void onBeforeClusterItemRendered(MarkerObj item, MarkerOptions markerOptions) {
+           // mImageView.setImageResource(R.drawable.cluster_icon);
+            Bitmap icon = mIconGenerator.makeIcon();
+            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.mobil_tm_marker))).title(item.getName());
+        }
+
+        @Override
+        protected void onBeforeClusterRendered(Cluster<MarkerObj> cluster, MarkerOptions markerOptions) {
+
+            //mClusterImageView.setImageResource(R.drawable.cluster_icon);
+            //mClusterTextView.setText(String.valueOf(cluster.getSize()));
+            mClusterIconGenerator.setBackground(getResources().getDrawable(R.drawable.cluster_icon));
+            Bitmap icon = mClusterIconGenerator.makeIcon(String.valueOf(cluster.getSize()));
+            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
+
+        }
+
+        @Override
+        protected boolean shouldRenderAsCluster(Cluster<MarkerObj> cluster) {
+            // Always render clusters.
+            return cluster.getSize() > 1;
+        }
+    }
+
+    @Override
+    public boolean onClusterClick(Cluster<MarkerObj> cluster) {
+
+        // Zoom in the cluster. Need to create LatLngBounds and including all the cluster items
+        // inside of bounds, then animate to center of the bounds.
+
+        // Create the builder to collect all essential cluster items for the bounds.
+        LatLngBounds.Builder builder = LatLngBounds.builder();
+        for (ClusterItem item : cluster.getItems()) {
+            builder.include(item.getPosition());
+        }
+        // Get the LatLngBounds
+        final LatLngBounds bounds = builder.build();
+
+        // Animate camera to the bounds
+        try {
+            stationsMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onClusterInfoWindowClick(Cluster<MarkerObj> cluster) {
+
+    }
+
+    @Override
+    public boolean onClusterItemClick(MarkerObj markerObj) {
+
+        return false;
+    }
+
+    @Override
+    public void onClusterItemInfoWindowClick(MarkerObj markerObj) {
+
+    }
+
+    private LatLng position() {
+        return new LatLng(random(51.6723432, 51.38494009999999), random(0.148271, -0.3514683));
+    }
+
+    private double random(double min, double max) {
+        return mRandom.nextDouble() * (max - min) + min;
+    }
 }
