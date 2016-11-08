@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,12 +21,14 @@ import android.widget.TextView;
 import com.exxonmobil.mobapp.R;
 import com.exxonmobil.mobapp.app.MarkerDataSource;
 import com.exxonmobil.mobapp.app.MarkerObj;
+import com.exxonmobil.mobapp.helper.StationServicesAdapter;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +36,10 @@ import java.util.List;
  */
 public class StationInfo extends AppCompatActivity {
 
-    GridLayout fuels, services;
+    GridLayout fuels;//, services;
+    RecyclerView services;
+    ArrayList<Integer> servicesArrayList;
+    StationServicesAdapter stationServicesAdapter;
     RelativeLayout fuelsBar, servicesBar;
     MarkerDataSource stationInfo;
     TextView StationName;
@@ -126,13 +136,9 @@ public class StationInfo extends AppCompatActivity {
         ImageView stationRoute = (ImageView) findViewById(R.id.station_route);
 
         fuels = (GridLayout) findViewById(R.id.fuels);
-        services = (GridLayout)findViewById(R.id.services);
+        services = (RecyclerView) findViewById(R.id.services);//(GridLayout)findViewById(R.id.services);
         fuelsBar = (RelativeLayout) findViewById(R.id.fuels_bar);
         servicesBar = (RelativeLayout) findViewById(R.id.services_bar);
-
-
-
-        fuels.setPadding(0, 0, 5, 0);
 
         Bundle marker = getIntent().getExtras();
 
@@ -156,78 +162,104 @@ public class StationInfo extends AppCompatActivity {
         int sflag = 0;
         int fflag = 0;
 
+        servicesArrayList = new ArrayList<Integer>();
+
         if(m.get(0).getLubricants().equals("Mobil 1 Center")) {
+            /*
             ImageView Mobil1Center = new ImageView(this);
             Mobil1Center.setImageResource(R.drawable.mobil1_center);
             Mobil1Center.setLayoutParams(new LayoutParams(448, 50));
             services.addView(Mobil1Center);
+            */
+            servicesArrayList.add(R.drawable.mobil1_center);
             sflag = 1;
         }
         else if(m.get(0).getLubricants().equals("Autocare")){
+            /*
             ImageView AutoCare = new ImageView(this);
             AutoCare.setImageResource(R.drawable.products);
             AutoCare.setLayoutParams(new LayoutParams(75, 75));
             services.addView(AutoCare);
+            */
+            servicesArrayList.add(R.drawable.car_wash);
             sflag = 1;
         }
         if(m.get(0).getMOG80().equals("YES")){
             ImageView mog80 = new ImageView(this);
             mog80.setImageResource(R.drawable.mog80);
-            mog80.setLayoutParams(new LayoutParams(75, 75));
+            mog80.setLayoutParams(new LayoutParams(100, 100));
             fuels.addView(mog80);
             fflag = 1;
         }
         if(m.get(0).getMOG92().equals("YES")){
             ImageView mog92 = new ImageView(this);
             mog92.setImageResource(R.drawable.mog92);
-            mog92.setLayoutParams(new LayoutParams(75, 75));
+            mog92.setLayoutParams(new LayoutParams(100, 100));
             fuels.addView(mog92);
             fflag = 1;
         }
         if(m.get(0).getMOG95().equals("YES")){
             ImageView mog95 = new ImageView(this);
             mog95.setImageResource(R.drawable.mog95);
-            mog95.setLayoutParams(new LayoutParams(75, 75));
+            mog95.setLayoutParams(new LayoutParams(100, 100));
             fuels.addView(mog95);
             fflag = 1;
         }
         if(m.get(0).getDiesel().equals("YES")) {
             ImageView diesel = new ImageView(this);
             diesel.setImageResource(R.drawable.diesel);
-            diesel.setLayoutParams(new LayoutParams(75, 75));
+            diesel.setLayoutParams(new LayoutParams(100, 100));
             fuels.addView(diesel);
             fflag = 1;
         }
         if(m.get(0).getOnTheRun().equals("YES")){
+/*
             ImageView OnTheRun = new ImageView(this);
             OnTheRun.setImageResource(R.drawable.on_the_run);
             OnTheRun.setLayoutParams(new LayoutParams(179, 75));
             services.addView(OnTheRun);
+*/
+            servicesArrayList.add(R.drawable.on_the_run);
             sflag =1;
         }
         if(m.get(0).getMobilMart().equals("YES")){
+/*
             ImageView MobilMart = new ImageView(this);
             MobilMart.setImageResource(R.drawable.mobil1_logo);
             MobilMart.setLayoutParams(new LayoutParams(75, 75));
             services.addView(MobilMart);
+            */
+            servicesArrayList.add(R.drawable.on_the_run);
             sflag = 1;
         }
         if(m.get(0).getTheWayToGo().equals("YES")){
-
+/*
             ImageView TheWayToGo = new ImageView(this);
             TheWayToGo.setImageResource(R.drawable.stations);
             TheWayToGo.setLayoutParams(new LayoutParams(75, 75));
             services.addView(TheWayToGo);
+            */
+            servicesArrayList.add(R.drawable.on_the_run);
             sflag = 1;
         }
         if(m.get(0).getCarWash().equals("YES")){
+/*
             ImageView CarWash = new ImageView(this);
             CarWash.setImageResource(R.drawable.car_wash);
             CarWash.setLayoutParams(new LayoutParams(75, 75));
             services.addView(CarWash);
+*/
+            servicesArrayList.add(R.drawable.car_wash);
             sflag = 1;
         }
 
+        services.setLayoutManager(new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false));
+        services.setItemAnimator(new DefaultItemAnimator());
+
+        stationServicesAdapter = new StationServicesAdapter(this, servicesArrayList);
+
+        services.setHasFixedSize(true);
+        services.setAdapter(stationServicesAdapter);
         if (sflag ==0){
             servicesBar.setVisibility(View.GONE);
             services.setVisibility(View.GONE);

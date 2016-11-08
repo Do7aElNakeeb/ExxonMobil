@@ -97,7 +97,6 @@ public class Landing extends AppCompatActivity{
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Products.class);
                 startActivity(intent);
-                finish();
                 return false;
             }
         };
@@ -106,7 +105,6 @@ public class Landing extends AppCompatActivity{
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Promotions.class);
                 startActivity(intent);
-                finish();
                 return false;
             }
         };
@@ -115,7 +113,6 @@ public class Landing extends AppCompatActivity{
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
-                finish();
                 return false;
             }
         };
@@ -134,7 +131,6 @@ public class Landing extends AppCompatActivity{
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(Landing.this, Login.class);
             startActivity(intent);
-            finish();
         }
 
         Stations.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +138,6 @@ public class Landing extends AppCompatActivity{
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Stations.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -151,7 +146,6 @@ public class Landing extends AppCompatActivity{
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Products.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -160,7 +154,6 @@ public class Landing extends AppCompatActivity{
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Promotions.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -169,7 +162,6 @@ public class Landing extends AppCompatActivity{
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Profile.class);
                 startActivity(i);
-                finish();
             }
         });
 

@@ -70,7 +70,6 @@ public class Products extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Landing.class);
                 startActivity(intent);
-                finish();
                 return true;
             }
         };
@@ -79,7 +78,6 @@ public class Products extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Stations.class);
                 startActivity(intent);
-                finish();
                 return true;
             }
         };
@@ -88,7 +86,6 @@ public class Products extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Products.class);
                 startActivity(intent);
-                finish();
                 return true;
             }
         };
@@ -97,7 +94,6 @@ public class Products extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Promotions.class);
                 startActivity(intent);
-                finish();
                 return true;
             }
         };
@@ -106,7 +102,6 @@ public class Products extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
-                finish();
                 return true;
             }
         };
