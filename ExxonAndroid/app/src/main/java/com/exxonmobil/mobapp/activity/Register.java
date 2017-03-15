@@ -204,7 +204,7 @@ public class Register extends AppCompatActivity{
                         String message = jObj.getString("message");
                         String name = jObj.getString("name");
                         String email = jObj.getString("email");
-                        String mobile = jObj.getString("email");
+                        String mobile = jObj.getString("mobile");
                         String carBrand = jObj.getString("carBrand");
                         String carModel = jObj.getString("carModel");
                         String carYear = jObj.getString("carYear");

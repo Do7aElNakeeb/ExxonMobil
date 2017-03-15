@@ -102,8 +102,16 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-                String regID = FirebaseInstanceId.getInstance().getToken();
-                registerUser(email, password, regID);
+                if (email.equals("guest") && password.equals("guest")){
+                    // Launch login activity
+                    Intent intent = new Intent(Login.this, Landing.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    String regID = FirebaseInstanceId.getInstance().getToken();
+                    registerUser(email, password, regID);
+                }
             }
         });
     }

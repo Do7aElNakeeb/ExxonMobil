@@ -5,23 +5,23 @@ package com.exxonmobil.mobapp.app;
  */
 public class AppConfig {
     // Server user login url
-    public static String URL_LOGIN = "http://exxonmobil.do7aelnakeeb.cf/login.php";
+    public static String URL_LOGIN = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/login.php";
 
     // Server user register url
-    public static String URL_REGISTER = "http://exxonmobil.do7aelnakeeb.cf/register.php";
+    public static String URL_REGISTER = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/register.php";
 
     // Server user register url
-    public static String URL_UPDATE = "http://exxonmobil.do7aelnakeeb.cf/updateUser.php";
+    public static String URL_UPDATE = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/updateUser.php";
 
     // Server stations url
-    public static String URL_STATIONS = "http://exxonmobil.do7aelnakeeb.cf/stations.php";
+    public static String URL_STATIONS = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/stations.php";
 
     // Server promotions url
-    public static String URL_SERVER = "http://exxonmobil.do7aelnakeeb.cf/";
+    public static String URL_SERVER = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/";
 
     // Server promotions url
-    public static String URL_PROMOTIONS = "http://exxonmobil.do7aelnakeeb.cf/promotions.php";
+    public static String URL_PROMOTIONS = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/promotions.php";
 
     // Server promotions url
-    public static String URL_PRODUCTS = "http://exxonmobil.do7aelnakeeb.cf/products.php";
+    public static String URL_PRODUCTS = "http://79.170.40.33/do7aelnakeeb.cf/ExxonMobil/products.php";
 }
